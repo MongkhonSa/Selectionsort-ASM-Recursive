@@ -1,0 +1,174 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             myData, DATA
+    2 00000000 0000000B 
+                       MAX     EQU              11
+    3 00000000 00000007 
+              00000008 
+              00000002 
+              00000009 
+              00000005 
+              00000003 
+              00000006 
+              00000001 
+              00000004 
+              00000009 
+              0000000C ARRAY   DCD              7,8,2,9,5,3,6,1,4,9,12
+    4 0000002C                 AREA             main, CODE
+    5 00000000         
+    6 00000000                 EXPORT           __main      ; make __main visib
+                                                            le to linke
+    7 00000000                 ENTRY
+    8 00000000 4811    __main  LDR              r0,=ARRAY
+    9 00000002 F04F 0200       mov              r2,#0       ;MIN index
+   10 00000006 F04F 0300       mov              r3,#0       ;startIndex loop
+   11 0000000A F04F 090B       LDR              r9,=MAX
+   12 0000000E F04F 0A04       mov              r10,#4
+   13 00000012 FB09 F90A       MUL              r9,r9,r10   ;r9 is max *4
+   14 00000016 F1A9 0A04       SUB              r10,r9,#4
+   15 0000001A         
+   16 0000001A         SelectionSort
+   17 0000001A 4553            cmp              r3,r10      ;r10= length array 
+                                                            -1
+   18 0000001C DA14            BGE              stop        ;return 
+   19 0000001E 461A            mov              r2,r3       ;minIndex = startIn
+                                                            dex;
+   20 00000020         ;ADD r4,r3,#0;r4 is index 
+   21 00000020 461C            MOV              r4, r3      ;index=start index
+   22 00000022         FindMin
+   23 00000022 F104 0404       ADD              r4,r4,#4    ;count up loop
+   24 00000026 454C            cmp              r4,r9
+   25 00000028 DA05            BGE              SWAP
+   26 0000002A         ;ADD r4,r4,#4
+   27 0000002A 5905            LDR              r5,[r0,r4]  ; array[index]
+   28 0000002C 5886            LDR              r6,[r0,r2]  ; array[minIndex]
+   29 0000002E 42B5            cmp              r5,r6
+   30 00000030 DAF7            BGE              FindMin     ; if (array[index] 
+                                                            < array[minIndex] )
+                                                            
+   31 00000032 4622            mov              r2,r4       ;minIndex = index
+   32 00000034 E7F5            B                FindMin
+   33 00000036         SWAP
+   34 00000036         
+   35 00000036 58C7            LDR              r7,[r0,r3]  ;load data from eac
+                                                            h array
+   36 00000038 F850 8002       LDR              r8,[r0,r2]
+   37 0000003C 5087            STR              r7,[r0,r2]  ;swap and store
+   38 0000003E F840 8003       STR              r8,[r0,r3]
+   39 00000042 F103 0304       ADD              r3,r3,#4
+   40 00000046 E7E8            B                SelectionSort
+   41 00000048         stop
+   42 00000048         
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+                       
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Target_1 -IC:\Keil_v5
+\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\D
+evice\ARM\ARMCM3\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VER
+SION SETA 524" --predefine="_RTE_ SETA 1" --predefine="ARMCM3 SETA 1" --list=.\
+listings\main.lst C:\Users\ITokkyZ\Downloads\main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ARRAY 00000000
+
+Symbol: ARRAY
+   Definitions
+      At line 3 in file C:\Users\ITokkyZ\Downloads\main.s
+   Uses
+      At line 8 in file C:\Users\ITokkyZ\Downloads\main.s
+Comment: ARRAY used once
+myData 00000000
+
+Symbol: myData
+   Definitions
+      At line 1 in file C:\Users\ITokkyZ\Downloads\main.s
+   Uses
+      None
+Comment: myData unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+FindMin 00000022
+
+Symbol: FindMin
+   Definitions
+      At line 22 in file C:\Users\ITokkyZ\Downloads\main.s
+   Uses
+      At line 30 in file C:\Users\ITokkyZ\Downloads\main.s
+      At line 32 in file C:\Users\ITokkyZ\Downloads\main.s
+
+SWAP 00000036
+
+Symbol: SWAP
+   Definitions
+      At line 33 in file C:\Users\ITokkyZ\Downloads\main.s
+   Uses
+      At line 25 in file C:\Users\ITokkyZ\Downloads\main.s
+Comment: SWAP used once
+SelectionSort 0000001A
+
+Symbol: SelectionSort
+   Definitions
+      At line 16 in file C:\Users\ITokkyZ\Downloads\main.s
+   Uses
+      At line 40 in file C:\Users\ITokkyZ\Downloads\main.s
+Comment: SelectionSort used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 8 in file C:\Users\ITokkyZ\Downloads\main.s
+   Uses
+      At line 6 in file C:\Users\ITokkyZ\Downloads\main.s
+Comment: __main used once
+main 00000000
+
+Symbol: main
+   Definitions
+      At line 4 in file C:\Users\ITokkyZ\Downloads\main.s
+   Uses
+      None
+Comment: main unused
+stop 00000048
+
+Symbol: stop
+   Definitions
+      At line 41 in file C:\Users\ITokkyZ\Downloads\main.s
+   Uses
+      At line 18 in file C:\Users\ITokkyZ\Downloads\main.s
+Comment: stop used once
+6 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+MAX 0000000B
+
+Symbol: MAX
+   Definitions
+      At line 2 in file C:\Users\ITokkyZ\Downloads\main.s
+   Uses
+      At line 11 in file C:\Users\ITokkyZ\Downloads\main.s
+Comment: MAX used once
+1 symbol
+345 symbols in table
